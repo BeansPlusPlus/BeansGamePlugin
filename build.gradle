@@ -33,6 +33,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId 'beansplusplus.gameconfig'
             artifactId 'gameconfigplugin'
+            version '1.0-SNAPSHOT'
 
             from components.java
         }
