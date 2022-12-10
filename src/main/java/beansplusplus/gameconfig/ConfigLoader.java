@@ -1,5 +1,6 @@
-package tomay0.gameconfig;
+package beansplusplus.gameconfig;
 
+import beansplusplus.gameconfig.setting.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.Yaml;
 import tomay0.gameconfig.setting.*;

@@ -1,8 +1,8 @@
-package tomay0.gameconfig.setting;
+package beansplusplus.gameconfig.setting;
 
+import beansplusplus.gameconfig.ConfigSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import tomay0.gameconfig.ConfigSetting;
 
 import java.util.ArrayList;
 import java.util.List;

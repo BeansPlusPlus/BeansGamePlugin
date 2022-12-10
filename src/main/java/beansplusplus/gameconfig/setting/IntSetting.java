@@ -1,6 +1,6 @@
-package tomay0.gameconfig.setting;
+package beansplusplus.gameconfig.setting;
 
-import tomay0.gameconfig.ConfigSetting;
+import beansplusplus.gameconfig.ConfigSetting;
 
 public class IntSetting extends ConfigSetting<Integer> {
   private int min, max;

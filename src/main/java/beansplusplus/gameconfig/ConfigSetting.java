@@ -1,4 +1,4 @@
-package tomay0.gameconfig;
+package beansplusplus.gameconfig;
 
 import java.util.ArrayList;
 import java.util.List;

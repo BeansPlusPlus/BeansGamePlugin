@@ -1,6 +1,6 @@
-package tomay0.gameconfig.setting;
+package beansplusplus.gameconfig.setting;
 
-import tomay0.gameconfig.ConfigSetting;
+import beansplusplus.gameconfig.ConfigSetting;
 
 import java.util.ArrayList;
 import java.util.Arrays;

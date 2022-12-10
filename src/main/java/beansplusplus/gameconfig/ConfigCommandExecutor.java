@@ -1,4 +1,4 @@
-package tomay0.gameconfig;
+package beansplusplus.gameconfig;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
