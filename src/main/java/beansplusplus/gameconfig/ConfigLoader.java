@@ -10,18 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigLoader {
-  public static class GameConfigError extends Error {
+  static class GameConfigError extends Error {
     GameConfigError(String message) {
       super(message);
     }
   }
 
-  public static void loadForPlugin(JavaPlugin plugin) {
-    GameConfiguration.setConfigSettings(getConfigSettings(plugin.getResource("config.yml")));
-
-    ConfigCommandExecutor configCommand = new ConfigCommandExecutor();
-    plugin.getCommand("config").setTabCompleter(configCommand);
-    plugin.getCommand("config").setExecutor(configCommand);
+  public static void loadFromInput(InputStream stream) {
+    GameConfiguration.setConfigSettings(getConfigSettings(stream));
   }
 
   private static List<ConfigSetting> getConfigSettings(InputStream is) {
