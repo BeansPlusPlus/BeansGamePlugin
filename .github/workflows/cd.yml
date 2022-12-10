@@ -15,5 +15,13 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Execute Gradle build
-        run: gradle build
+      - name: Execute Gradle jar
+        run: gradle jar
+
+      - uses: bacongobbler/azure-blob-storage-upload@main
+        with:
+          source_dir: build/libs  # This folder should contain only the Jar file
+          container_name: www
+          account_name: saggyresourcepack
+          sas_token: ${{ secrets.StorageSAS }}
+          overwrite: 'true'
