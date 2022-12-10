@@ -14,8 +14,9 @@ repositories {
 
 dependencies {
     implementation 'org.codehaus.groovy:groovy-all:3.0.5'
-    compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
+    implementation 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
 }
+
 publishing {
     repositories {
         maven {
@@ -29,8 +30,11 @@ publishing {
     }
 
     publications {
-        gpr(MavenPublication) {
-            from(components.java)
+        mavenJava(MavenPublication) {
+            groupId 'beansplusplus.gameconfig'
+            artifactId 'gameconfigplugin'
+
+            from components.java
         }
     }
 }
