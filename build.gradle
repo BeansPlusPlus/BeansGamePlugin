@@ -6,6 +6,11 @@ plugins {
 group 'beansplusplus.gameconfig'
 version '1.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = 16
+    targetCompatibility = 16
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
