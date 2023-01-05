@@ -57,14 +57,14 @@ public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
   @Override
   public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
     if (args.length == 1) {
-      return GameConfiguration.getConfig().getKeys();
+      return filterStartWith(GameConfiguration.getConfig().getKeys(), args[0]);
     }
 
     String key = args[0].toLowerCase();
 
     if (!GameConfiguration.getConfig().hasKey(key)) return new ArrayList<>();
 
-    return GameConfiguration.getConfig().getSetting(key).tabCompletion(args);
+    return filterStartWith(GameConfiguration.getConfig().getSetting(key).tabCompletion(args), args[args.length - 1]);
   }
 
 
@@ -74,5 +74,9 @@ public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
     for (String key : GameConfiguration.getConfig().getKeys()) {
       sender.sendMessage(ChatColor.YELLOW + key + ": " + ChatColor.RED + GameConfiguration.getConfig().formatValue(key));
     }
+  }
+
+  private List<String> filterStartWith(List<String> options, String startWith) {
+    return options.stream().filter((s) -> s.toLowerCase().startsWith(startWith.toLowerCase())).toList();
   }
 }
