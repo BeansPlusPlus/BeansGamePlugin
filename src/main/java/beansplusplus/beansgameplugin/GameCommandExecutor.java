@@ -34,7 +34,7 @@ public class GameCommandExecutor implements CommandExecutor {
       return;
     }
 
-    currentGame = gameSupplier.get(configuration);
+    currentGame = gameSupplier.get(sender, configuration);
 
     if (currentGame != null) {
       currentGame.start();
@@ -56,7 +56,7 @@ public class GameCommandExecutor implements CommandExecutor {
       return;
     }
 
-    Game newGame = gameSupplier.get(configuration);
+    Game newGame = gameSupplier.get(sender, configuration);
 
     if (newGame != null) {
       currentGame.stop();
