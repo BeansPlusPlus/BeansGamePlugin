@@ -3,22 +3,11 @@ package beansplusplus.beansgameplugin;
 import java.util.*;
 
 public class GameConfiguration {
-  private static GameConfiguration config;
-
-  static void setConfigSettings(List<ConfigSetting> settings) {
-    config = new GameConfiguration(settings);
-  }
-
-  public static GameConfiguration getConfig() {
-    if (config == null) throw new ConfigLoader.GameConfigError("Game configuration not loaded!");
-    return config;
-  }
-
   private Map<String, ConfigSetting> settings = new HashMap<>();
   private Map<String, Object> currentConfig = new HashMap<>();
   private List<String> orderedKeys = new ArrayList<>();
 
-  private GameConfiguration(List<ConfigSetting> settings) {
+  GameConfiguration(List<ConfigSetting> settings) {
     for (ConfigSetting setting : settings) {
       this.settings.put(setting.getKey(), setting);
       this.currentConfig.put(setting.getKey(), setting.getDefault());

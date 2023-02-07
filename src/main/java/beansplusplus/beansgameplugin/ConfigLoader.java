@@ -15,8 +15,8 @@ public class ConfigLoader {
     }
   }
 
-  public static void loadFromInput(InputStream stream) {
-    GameConfiguration.setConfigSettings(getConfigSettings(stream));
+  static GameConfiguration loadConfig(InputStream is) {
+    return new GameConfiguration(getConfigSettings(is));
   }
 
   private static List<ConfigSetting> getConfigSettings(InputStream is) {

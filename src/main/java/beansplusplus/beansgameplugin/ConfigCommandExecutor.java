@@ -14,6 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
+  private GameConfiguration configuration;
+
+  ConfigCommandExecutor(GameConfiguration configuration) {
+    this.configuration = configuration;
+  }
+
+
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     try {
@@ -24,14 +31,14 @@ public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
 
       String key = args[0].toLowerCase();
 
-      if (!GameConfiguration.getConfig().hasKey(key)) {
+      if (!configuration.hasKey(key)) {
         showConfiguration(sender);
         return false;
       }
 
       String argsJoined = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
 
-      ConfigSetting setting = GameConfiguration.getConfig().getSetting(args[0].toLowerCase());
+      ConfigSetting setting = configuration.getSetting(args[0].toLowerCase());
 
       String error = setting.validate(argsJoined);
 
@@ -42,10 +49,10 @@ public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
 
       Object v = setting.parse(argsJoined);
 
-      GameConfiguration.getConfig().setValue(key, v);
+      configuration.setValue(key, v);
 
       for (Player player : Bukkit.getOnlinePlayers()) {
-        player.sendMessage(ChatColor.YELLOW + key + ChatColor.WHITE + " set to " + ChatColor.RED + GameConfiguration.getConfig().formatValue(key));
+        player.sendMessage(ChatColor.YELLOW + key + ChatColor.WHITE + " set to " + ChatColor.RED + configuration.formatValue(key));
       }
     } catch (NumberFormatException e) {
       sender.sendMessage(ChatColor.DARK_RED + "Invalid number entered");
@@ -57,22 +64,22 @@ public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
   @Override
   public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
     if (args.length == 1) {
-      return filterStartWith(GameConfiguration.getConfig().getKeys(), args[0]);
+      return filterStartWith(configuration.getKeys(), args[0]);
     }
 
     String key = args[0].toLowerCase();
 
-    if (!GameConfiguration.getConfig().hasKey(key)) return new ArrayList<>();
+    if (!configuration.hasKey(key)) return new ArrayList<>();
 
-    return filterStartWith(GameConfiguration.getConfig().getSetting(key).tabCompletion(args), args[args.length - 1]);
+    return filterStartWith(configuration.getSetting(key).tabCompletion(args), args[args.length - 1]);
   }
 
 
   private void showConfiguration(CommandSender sender) {
     sender.sendMessage("[Current Game Configuration]");
 
-    for (String key : GameConfiguration.getConfig().getKeys()) {
-      sender.sendMessage(ChatColor.YELLOW + key + ": " + ChatColor.RED + GameConfiguration.getConfig().formatValue(key));
+    for (String key : configuration.getKeys()) {
+      sender.sendMessage(ChatColor.YELLOW + key + ": " + ChatColor.RED + configuration.formatValue(key));
     }
   }
 
