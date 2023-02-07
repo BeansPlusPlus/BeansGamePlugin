@@ -1,6 +1,6 @@
-package beansplusplus.gameconfig.setting;
+package beansplusplus.beansgameplugin.setting;
 
-import beansplusplus.gameconfig.ConfigSetting;
+import beansplusplus.beansgameplugin.ConfigSetting;
 
 public class IntSetting extends ConfigSetting<Integer> {
   private int min, max;

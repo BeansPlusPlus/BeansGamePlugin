@@ -1,7 +1,6 @@
-package beansplusplus.gameconfig;
+package beansplusplus.beansgameplugin;
 
-import beansplusplus.gameconfig.setting.*;
-import org.bukkit.plugin.java.JavaPlugin;
+import beansplusplus.beansgameplugin.setting.*;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;

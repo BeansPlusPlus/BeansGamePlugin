@@ -1,4 +1,4 @@
-package beansplusplus.gameconfig;
+package beansplusplus.beansgameplugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

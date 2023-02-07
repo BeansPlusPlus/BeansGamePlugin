@@ -1,4 +1,4 @@
-package beansplusplus.gameconfig;
+package beansplusplus.beansgameplugin;
 
 import java.util.ArrayList;
 import java.util.List;
