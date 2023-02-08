@@ -8,12 +8,12 @@ import org.bukkit.command.CommandSender;
 public class GameCommandExecutor implements CommandExecutor {
   private GameConfiguration configuration;
   private GameSupplier gameSupplier;
-
-  private Game currentGame = null;
+  private GameState state;
 
   public GameCommandExecutor(GameConfiguration configuration, GameSupplier gameSupplier) {
     this.configuration = configuration;
     this.gameSupplier = gameSupplier;
+    this.state = new GameState();
   }
 
   @Override
@@ -29,57 +29,54 @@ public class GameCommandExecutor implements CommandExecutor {
   }
 
   private void start(CommandSender sender) {
-    if (currentGame != null) {
+    if (state.gameStarted()) {
       sender.sendMessage(ChatColor.DARK_RED + "Game already running.");
       return;
     }
 
-    currentGame = gameSupplier.get(sender, configuration);
+    Game game = gameSupplier.get(sender, configuration, state);
 
-    if (currentGame != null) {
-      currentGame.start();
-    }
+    if (game != null) state.startNewGame(game);
   }
 
   private void stop(CommandSender sender) {
-    if (currentGame == null) {
+    if (!state.gameStarted()) {
       sender.sendMessage(ChatColor.DARK_RED + "No game is currently running.");
       return;
     }
 
-    currentGame.stop();
+    state.stopGame();
   }
 
   private void reset(CommandSender sender) {
-    if (currentGame == null) {
+    if (!state.gameStarted()) {
       sender.sendMessage(ChatColor.DARK_RED + "No game is currently running.");
       return;
     }
 
-    Game newGame = gameSupplier.get(sender, configuration);
+    Game game = gameSupplier.get(sender, configuration, state);
 
-    if (newGame != null) {
-      currentGame.stop();
-      currentGame = newGame;
-      currentGame.start();
+    if (game != null) {
+      state.stopGame();
+      state.startNewGame(game);
     }
   }
 
   private void pause(CommandSender sender) {
-    if (currentGame == null) {
+    if (!state.gameStarted()) {
       sender.sendMessage(ChatColor.DARK_RED + "No game is currently running.");
       return;
     }
 
-    currentGame.pause();
+    state.setPaused(!state.isPaused());
   }
 
   private void unpause(CommandSender sender) {
-    if (currentGame == null) {
+    if (!state.gameStarted()) {
       sender.sendMessage(ChatColor.DARK_RED + "No game is currently running.");
       return;
     }
 
-    currentGame.unpause();
+    state.setPaused(false);
   }
 }
