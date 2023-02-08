@@ -6,12 +6,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class GameCommandExecutor implements CommandExecutor {
-  private GameConfiguration configuration;
-  private GameSupplier gameSupplier;
-  private GameState state;
+  private final GameConfiguration configuration;
+  private final GameStartValidator validator;
+  private final GameSupplier gameSupplier;
+  private final GameState state;
 
-  public GameCommandExecutor(GameConfiguration configuration, GameSupplier gameSupplier) {
+  GameCommandExecutor(GameConfiguration configuration, GameStartValidator validator, GameSupplier gameSupplier) {
     this.configuration = configuration;
+    this.validator = validator;
     this.gameSupplier = gameSupplier;
     this.state = new GameState();
   }
@@ -34,9 +36,9 @@ public class GameCommandExecutor implements CommandExecutor {
       return;
     }
 
-    Game game = gameSupplier.get(sender, configuration, state);
-
-    if (game != null) state.startNewGame(game);
+    if (validator.isValid(sender, configuration)) {
+      state.startNewGame(gameSupplier.get(configuration, state));
+    }
   }
 
   private void stop(CommandSender sender) {
@@ -54,11 +56,9 @@ public class GameCommandExecutor implements CommandExecutor {
       return;
     }
 
-    Game game = gameSupplier.get(sender, configuration, state);
-
-    if (game != null) {
+    if (validator.isValid(sender, configuration)) {
       state.stopGame();
-      state.startNewGame(game);
+      state.startNewGame(gameSupplier.get(configuration, state));
     }
   }
 

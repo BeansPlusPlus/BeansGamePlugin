@@ -20,7 +20,6 @@ public class ConfigCommandExecutor implements CommandExecutor, TabCompleter {
     this.configuration = configuration;
   }
 
-
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     try {
