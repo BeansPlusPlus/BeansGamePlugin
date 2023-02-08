@@ -32,9 +32,5 @@ public class GameState {
 
   void setPaused(boolean paused) {
     this.paused = paused;
-
-    for (Player player : Bukkit.getOnlinePlayers()) {
-      player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Game is now " + (paused ? "paused" : "unpaused"));
-    }
   }
 }

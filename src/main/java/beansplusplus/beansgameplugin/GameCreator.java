@@ -12,7 +12,7 @@ public interface GameCreator {
 
   InputStream config();
 
-  List<String> rules();
+  List<String> rulePages();
 
   String name();
 }

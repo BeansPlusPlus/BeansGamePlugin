@@ -10,7 +10,7 @@ public class BeansGamePlugin extends JavaPlugin {
 
     ConfigCommandExecutor configCommandExecutor = new ConfigCommandExecutor(configuration);
     GameCommandExecutor gameCommandExecutor = new GameCommandExecutor(state, configuration, gameCreator);
-    RuleCommandExecutor ruleCommandExecutor = new RuleCommandExecutor(gameCreator.name(), gameCreator.rules());
+    RuleCommandExecutor ruleCommandExecutor = new RuleCommandExecutor(gameCreator.name(), gameCreator.rulePages());
     GameListener listener = new GameListener(gameCreator.name(), state);
 
     getCommand("config").setTabCompleter(configCommandExecutor);

@@ -1,9 +1,11 @@
 package beansplusplus.beansgameplugin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class GameCommandExecutor implements CommandExecutor {
   private final GameConfiguration configuration;
@@ -46,6 +48,10 @@ public class GameCommandExecutor implements CommandExecutor {
     }
 
     state.stopGame();
+
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Game has been manually stopped.");
+    }
   }
 
   private void reset(CommandSender sender) {
@@ -55,6 +61,10 @@ public class GameCommandExecutor implements CommandExecutor {
     }
 
     if (gameCreator.isValidSetup(sender, configuration)) {
+      for (Player player : Bukkit.getOnlinePlayers()) {
+        player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Game restarting...");
+      }
+
       state.stopGame();
       state.startNewGame(gameCreator.createGame(configuration, state));
     }
@@ -67,6 +77,10 @@ public class GameCommandExecutor implements CommandExecutor {
     }
 
     state.setPaused(!state.isPaused());
+
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Game is now " + (state.isPaused() ? "paused" : "unpaused"));
+    }
   }
 
   private void unpause(CommandSender sender) {
@@ -76,5 +90,9 @@ public class GameCommandExecutor implements CommandExecutor {
     }
 
     state.setPaused(false);
+
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Game is now unpaused");
+    }
   }
 }
