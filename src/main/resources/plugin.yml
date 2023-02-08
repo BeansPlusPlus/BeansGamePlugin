@@ -25,3 +25,6 @@ commands:
       Unpause a paused game
     aliases:
       - unpause
+  rules:
+    description: >
+      Show rules of the game

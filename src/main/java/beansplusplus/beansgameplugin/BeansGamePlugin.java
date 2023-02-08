@@ -2,14 +2,16 @@ package beansplusplus.beansgameplugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.InputStream;
-
 public class BeansGamePlugin extends JavaPlugin {
-  public void registerGame(InputStream configInputStream, GameStartValidator validator, GameSupplier gameSupplier) {
-    GameConfiguration configuration = ConfigLoader.loadConfig(configInputStream);
+  public void registerGame(GameCreator gameCreator) {
+    GameConfiguration configuration = ConfigLoader.loadConfig(gameCreator.config());
+
+    GameState state = new GameState();
 
     ConfigCommandExecutor configCommandExecutor = new ConfigCommandExecutor(configuration);
-    GameCommandExecutor gameCommandExecutor = new GameCommandExecutor(configuration, validator, gameSupplier);
+    GameCommandExecutor gameCommandExecutor = new GameCommandExecutor(state, configuration, gameCreator);
+    RuleCommandExecutor ruleCommandExecutor = new RuleCommandExecutor(gameCreator.name(), gameCreator.rules());
+    GameListener listener = new GameListener(gameCreator.name(), state);
 
     getCommand("config").setTabCompleter(configCommandExecutor);
     getCommand("config").setExecutor(configCommandExecutor);
@@ -18,5 +20,8 @@ public class BeansGamePlugin extends JavaPlugin {
     getCommand("reset").setExecutor(gameCommandExecutor);
     getCommand("pause").setExecutor(gameCommandExecutor);
     getCommand("continue").setExecutor(gameCommandExecutor);
+    getCommand("rules").setExecutor(ruleCommandExecutor);
+
+    getServer().getPluginManager().registerEvents(listener, this);
   }
 }

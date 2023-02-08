@@ -7,15 +7,13 @@ import org.bukkit.command.CommandSender;
 
 public class GameCommandExecutor implements CommandExecutor {
   private final GameConfiguration configuration;
-  private final GameStartValidator validator;
-  private final GameSupplier gameSupplier;
+  private final GameCreator gameCreator;
   private final GameState state;
 
-  GameCommandExecutor(GameConfiguration configuration, GameStartValidator validator, GameSupplier gameSupplier) {
+  GameCommandExecutor(GameState state, GameConfiguration configuration, GameCreator gameCreator) {
+    this.state = state;
     this.configuration = configuration;
-    this.validator = validator;
-    this.gameSupplier = gameSupplier;
-    this.state = new GameState();
+    this.gameCreator = gameCreator;
   }
 
   @Override
@@ -36,8 +34,8 @@ public class GameCommandExecutor implements CommandExecutor {
       return;
     }
 
-    if (validator.isValid(sender, configuration)) {
-      state.startNewGame(gameSupplier.get(configuration, state));
+    if (gameCreator.isValidSetup(sender, configuration)) {
+      state.startNewGame(gameCreator.createGame(configuration, state));
     }
   }
 
@@ -56,9 +54,9 @@ public class GameCommandExecutor implements CommandExecutor {
       return;
     }
 
-    if (validator.isValid(sender, configuration)) {
+    if (gameCreator.isValidSetup(sender, configuration)) {
       state.stopGame();
-      state.startNewGame(gameSupplier.get(configuration, state));
+      state.startNewGame(gameCreator.createGame(configuration, state));
     }
   }
 
