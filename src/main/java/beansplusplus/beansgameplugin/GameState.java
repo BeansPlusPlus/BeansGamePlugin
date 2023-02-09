@@ -1,9 +1,5 @@
 package beansplusplus.beansgameplugin;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 public class GameState {
   private Game currentGame;
 
@@ -13,6 +9,8 @@ public class GameState {
     return paused;
   }
 
+  public Game getCurrentGame() { return currentGame; }
+
   public void stopGame() {
     if (currentGame == null) return;
 
@@ -20,17 +18,17 @@ public class GameState {
     currentGame = null;
   }
 
-  boolean gameStarted() {
+  public boolean gameStarted() {
     return currentGame != null;
   }
 
-  void startNewGame(Game game) {
+  public void startNewGame(Game game) {
     currentGame = game;
     currentGame.start();
     paused = false;
   }
 
-  void setPaused(boolean paused) {
+  public void setPaused(boolean paused) {
     this.paused = paused;
   }
 }

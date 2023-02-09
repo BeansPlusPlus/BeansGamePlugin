@@ -3,7 +3,7 @@ package beansplusplus.beansgameplugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BeansGamePlugin extends JavaPlugin {
-  public void registerGame(GameCreator gameCreator) {
+  public GameState registerGame(GameCreator gameCreator) {
     GameConfiguration configuration = ConfigLoader.loadConfig(gameCreator.config());
 
     GameState state = new GameState();
@@ -23,5 +23,7 @@ public class BeansGamePlugin extends JavaPlugin {
     getCommand("rules").setExecutor(ruleCommandExecutor);
 
     getServer().getPluginManager().registerEvents(listener, this);
+
+    return state;
   }
 }
